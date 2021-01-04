@@ -6,22 +6,38 @@ using TMPro;
 [System.Serializable]
 public class NodeGrid : MonoBehaviour
 {
+	/// <summary>
+	/// The list of all nodes in the grid
+	/// </summary>
 	[SerializeField]
 	private List<Node> grid = new List<Node>();
 	public List<Node> Grid { set => grid = value; }
 
+	/// <summary>
+	/// The height of the grid
+	/// </summary>
 	[SerializeField]
 	private int height = -1;
 	public int Height { get => height; }
 
+	/// <summary>
+	/// The width of the grid
+	/// </summary>
 	[SerializeField]
 	private int width = -1;
 	public int Width { get => width; }
 
+	/// <summary>
+	/// The prefab to spawn at each node
+	/// </summary>
 	[SerializeField]
 	private GameObject nodePrefab = null;
 	public GameObject NodePrefab { get { return nodePrefab; } set { nodePrefab = value; } }
 
+	/// <summary>
+	/// All the different materials used to display the nodes in the pathfinding example
+	/// </summary>
+	#region Materials
 	[SerializeField]
 	private Material pathBaseMaterial;
 	public Material PathBaseMaterial { get { return pathBaseMaterial; } set { pathBaseMaterial = value; } }
@@ -45,14 +61,26 @@ public class NodeGrid : MonoBehaviour
 	[SerializeField]
 	private Material pathStartMaterial;
 	public Material PathStartMaterial { get { return pathStartMaterial; } set { pathStartMaterial = value; } }
+	#endregion
 
+	/// <summary>
+	/// Whether there is a search that is started
+	/// </summary>
 	private bool searching = false;
 
+	/// <summary>
+	/// Time between each node check
+	/// </summary>
 	private float checkTime = 0.1f;
 
+	/// <summary>
+	/// Coroutine that is run to display the algorithms search
+	/// </summary>
 	private IEnumerator search;
 
-	// Start is called before the first frame update
+	/// <summary>
+	/// Create all the node gameobjects
+	/// </summary>
 	private void Start()
 	{
 		for (int i = 0; i < width; i++)
@@ -77,6 +105,9 @@ public class NodeGrid : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Handle input and run algorithms
+	/// </summary>
 	private void Update()
 	{
 		// Only start a search if there are no searches currently
@@ -126,6 +157,12 @@ public class NodeGrid : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Search that checks all nearby nodes and slowly fans out
+	/// </summary>
+	/// <param name="start"></param>
+	/// <param name="end"></param>
+	/// <returns></returns>
 	IEnumerator BreadthFirstSearch(Node start, Node end)
 	{
 		searching = true;
@@ -191,6 +228,12 @@ public class NodeGrid : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Search that goes towards furthest nodes first, then returns
+	/// </summary>
+	/// <param name="start"></param>
+	/// <param name="end"></param>
+	/// <returns></returns>
 	IEnumerator DepthFirstSearch(Node start, Node end)
 	{
 		start.SpawnedTile.GetComponent<MeshRenderer>().material = pathStartMaterial;
@@ -268,6 +311,13 @@ public class NodeGrid : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Search that checks for fastest path using travel cost
+	/// Checks tiles based on shortest path to start
+	/// </summary>
+	/// <param name="start"></param>
+	/// <param name="end"></param>
+	/// <returns></returns>
 	IEnumerator DijkstraSearch(Node start, Node end)
 	{
 		start.SpawnedTile.GetComponent<MeshRenderer>().material = pathStartMaterial;
@@ -311,8 +361,17 @@ public class NodeGrid : MonoBehaviour
 			end = end.PathfindingNode;
 			end.SpawnedTile.GetComponent<MeshRenderer>().material = pathFinalMaterial;
 		}
+
+		start.SpawnedTile.GetComponent<MeshRenderer>().material = pathStartMaterial;
 	}
 
+	/// <summary>
+	/// Helper function to check nodes to add to the priority queue
+	/// </summary>
+	/// <param name="current"></param>
+	/// <param name="check"></param>
+	/// <param name="nodesToCheck"></param>
+	/// <param name="distanceToEnd"></param>
 	private void DijkstraNodeCheck(Node current, NodePoint check, ref PriorityQueue<Node> nodesToCheck, int distanceToEnd)
 	{
 		if(check.connected)
@@ -329,6 +388,13 @@ public class NodeGrid : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Search for fastest path taking into account travel cost
+	/// Uses cost to start and estimated cost to finish to traverse grid
+	/// </summary>
+	/// <param name="start"></param>
+	/// <param name="end"></param>
+	/// <returns></returns>
 	IEnumerator AStar(Node start, Node end)
 	{
 		start.SpawnedTile.GetComponent<MeshRenderer>().material = pathStartMaterial;
@@ -355,6 +421,8 @@ public class NodeGrid : MonoBehaviour
 					end.SpawnedTile.GetComponent<MeshRenderer>().material = pathFinalMaterial;
 				}
 
+				start.SpawnedTile.GetComponent<MeshRenderer>().material = pathStartMaterial;
+
 				break;
 			}
 
@@ -373,6 +441,13 @@ public class NodeGrid : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Helper function to add nodes to the priority queue
+	/// </summary>
+	/// <param name="current"></param>
+	/// <param name="check"></param>
+	/// <param name="nodesToCheck"></param>
+	/// <param name="end"></param>
 	private void AStarNodeCheck(Node current, NodePoint check, ref PriorityQueue<Node> nodesToCheck, NodePoint end)
 	{
 		if (check.connected)
@@ -389,11 +464,23 @@ public class NodeGrid : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// AStar Heuristic to estimate cost to the end node
+	/// </summary>
+	/// <param name="a"></param>
+	/// <param name="b"></param>
+	/// <returns></returns>
 	private float Heuristic(NodePoint a, NodePoint b)
 	{
 		return (Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y));
 	}
 
+	/// <summary>
+	/// Gets the direction to search for depth first search based on direction towards the end node
+	/// </summary>
+	/// <param name="start"></param>
+	/// <param name="end"></param>
+	/// <returns></returns>
 	private int[] GetDirection(Node start, Node end)
 	{
 		// 0 - Left, 1 - Right, 2 - Up, 3 - Down
@@ -486,21 +573,40 @@ public class NodeGrid : MonoBehaviour
 
 	#region NodeSetUp
 
+	/// <summary>
+	/// Returns a node on the grid at the position specified
+	/// </summary>
+	/// <param name="x"></param>
+	/// <param name="y"></param>
+	/// <returns></returns>
 	public Node GetNode(int x, int y)
 	{
 		return (grid[x + y * width]);
 	}
 
+	/// <summary>
+	/// Returns a node based on the node point given
+	/// </summary>
+	/// <param name="point"></param>
+	/// <returns></returns>
 	public Node GetNode(NodePoint point)
 	{
 		return (grid[point.x + point.y * width]);
 	}
 
+	/// <summary>
+	/// Clears the grid
+	/// </summary>
 	public void Clear()
 	{
 		grid.Clear();
 	}
 
+	/// <summary>
+	/// Changes the size of the grid
+	/// </summary>
+	/// <param name="newWidth"></param>
+	/// <param name="newHeight"></param>
 	public void AlterSize(int newWidth, int newHeight)
 	{
 		List<Node> newGrid = new List<Node>();
@@ -568,35 +674,13 @@ public class NodeGrid : MonoBehaviour
 
 	}
 
+	/// <summary>
+	/// Returns the number of tiles in the grid
+	/// </summary>
+	/// <returns></returns>
 	public int Count()
 	{
 		return grid.Count;
 	}
 	#endregion
-}
-
-[System.Serializable]
-public class NodeRow
-{
-	[SerializeField]
-	private List<Node> nodes = new List<Node>();
-
-	public int Count
-	{ get { return nodes.Count; } }
-
-	public Node this[int key]
-	{
-		get { return nodes[key]; }
-		set { nodes[key] = value; }
-	}
-
-	public void Add(Node n)
-	{
-		nodes.Add(n);
-	}
-
-	public void RemoveRange(int index, int count)
-	{
-		nodes.RemoveRange(index, count);
-	}
 }

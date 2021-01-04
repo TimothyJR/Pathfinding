@@ -1,11 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
+﻿/// <summary>
+/// Basic priority queue implementation for use in pathfinding algorithms
+/// Uses a binary tree as the implementation
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public class PriorityQueue<T>
 {
+	/// <summary>
+	/// The root node of the Queue
+	/// </summary>
 	private PriorityNode<T> root;
+
+	/// <summary>
+	/// Number of items in the queue
+	/// </summary>
 	public int Count { get; set; }
 
+	/// <summary>
+	/// Adds a node into its place based on priority
+	/// If the same priority, works like a regular queue
+	/// </summary>
+	/// <param name="item"></param>
+	/// <param name="priority"></param>
 	public void Enqueue(T item, float priority)
 	{
 		// Add item to queue
@@ -21,6 +36,12 @@ public class PriorityQueue<T>
 		Count++;
 	}
 
+	/// <summary>
+	/// Finds where the node should be placed in the tree
+	/// </summary>
+	/// <param name="item"></param>
+	/// <param name="priority"></param>
+	/// <param name="node"></param>
 	public void FindNodePosition(T item, float priority, PriorityNode<T> node)
 	{
 		if(node.PriorityValue > priority)
@@ -49,6 +70,11 @@ public class PriorityQueue<T>
 		}
 	}
 
+	/// <summary>
+	/// Returns the bottom left most node since it is highest priority
+	/// Will reconnect any child nodes of the node to its previous node
+	/// </summary>
+	/// <returns></returns>
 	public T Dequeue()
 	{
 		if(root == null)
@@ -100,6 +126,10 @@ public class PriorityQueue<T>
 
 }
 
+/// <summary>
+/// Nodes used in the priority queue
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public class PriorityNode<T>
 {
 	private PriorityNode<T> left;
