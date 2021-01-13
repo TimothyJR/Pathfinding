@@ -310,6 +310,10 @@ PrefabInstance:
       value: GraphSpawner
       objectReference: {fileID: 0}
     - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
+      propertyPath: startX
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
       propertyPath: grid.Array.data[10].travelCost
       value: 2
       objectReference: {fileID: 0}
@@ -340,6 +344,10 @@ PrefabInstance:
     - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
       propertyPath: grid.Array.data[152].travelCost
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
+      propertyPath: grid.Array.data[17].traversable
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
       propertyPath: grid.Array.data[180].travelCost
@@ -400,6 +408,86 @@ PrefabInstance:
     - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
       propertyPath: grid.Array.data[312].travelCost
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
+      propertyPath: grid.Array.data[37].traversable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
+      propertyPath: grid.Array.data[96].traversable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
+      propertyPath: grid.Array.data[123].traversable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
+      propertyPath: grid.Array.data[124].traversable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
+      propertyPath: grid.Array.data[125].traversable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
+      propertyPath: grid.Array.data[145].traversable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
+      propertyPath: grid.Array.data[147].traversable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
+      propertyPath: grid.Array.data[151].traversable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
+      propertyPath: grid.Array.data[152].traversable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
+      propertyPath: grid.Array.data[220].traversable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
+      propertyPath: grid.Array.data[244].traversable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
+      propertyPath: grid.Array.data[245].traversable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
+      propertyPath: grid.Array.data[258].traversable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
+      propertyPath: grid.Array.data[259].traversable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
+      propertyPath: grid.Array.data[318].traversable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
+      propertyPath: grid.Array.data[331].traversable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
+      propertyPath: grid.Array.data[332].traversable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
+      propertyPath: grid.Array.data[374].traversable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
+      propertyPath: grid.Array.data[379].traversable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395164656058243858, guid: 1799d934889f76f4690695e2892269f6, type: 3}
+      propertyPath: grid.Array.data[394].traversable
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5395164656058243859, guid: 1799d934889f76f4690695e2892269f6, type: 3}
       propertyPath: m_RootOrder

@@ -34,6 +34,22 @@ public class NodeGrid : MonoBehaviour
 	private GameObject nodePrefab = null;
 	public GameObject NodePrefab { get { return nodePrefab; } set { nodePrefab = value; } }
 
+	[SerializeField]
+	private int startX = 0;
+	public int StartX { get => startX; set => startX = value; }
+
+	[SerializeField]
+	private int startY = 0;
+	public int StartY { get => startY; set => startY = value; }
+
+	[SerializeField]
+	private int endX = 0;
+	public int EndX { get => endX; set => endX = value; }
+
+	[SerializeField]
+	private int endY = 0;
+	public int EndY { get => endY; set => endY = value; }
+
 	/// <summary>
 	/// All the different materials used to display the nodes in the pathfinding example
 	/// </summary>
@@ -61,6 +77,7 @@ public class NodeGrid : MonoBehaviour
 	[SerializeField]
 	private Material pathStartMaterial;
 	public Material PathStartMaterial { get { return pathStartMaterial; } set { pathStartMaterial = value; } }
+
 	#endregion
 
 	/// <summary>
@@ -116,25 +133,25 @@ public class NodeGrid : MonoBehaviour
 			if (Input.GetKey(KeyCode.Q))
 			{
 				// Breadth First
-				search = BreadthFirstSearch(grid[0], grid[grid.Count - 1]);
+				search = BreadthFirstSearch(GetNode(startX, startY), GetNode(endX, endY));
 				StartCoroutine(search);
 			}
 			else if (Input.GetKey(KeyCode.W))
 			{
 				// Depth First
-				search = DepthFirstSearch(grid[0], grid[grid.Count - 1]);
+				search = DepthFirstSearch(GetNode(startX, startY), GetNode(endX, endY));
 				StartCoroutine(search);
 			}
 			else if(Input.GetKey(KeyCode.E))
 			{
 				// Dijkstra's
-				search = DijkstraSearch(grid[0], grid[grid.Count - 1]);
+				search = DijkstraSearch(GetNode(startX, startY), GetNode(endX, endY));
 				StartCoroutine(search);
 			}
 			else if (Input.GetKey(KeyCode.R))
 			{
 				// A*
-				search = AStar(grid[0], grid[grid.Count - 1]);
+				search = AStar(GetNode(startX, startY), GetNode(endX, endY));
 				StartCoroutine(search);
 			}
 		}
@@ -359,7 +376,14 @@ public class NodeGrid : MonoBehaviour
 		while (end != start)
 		{
 			end = end.PathfindingNode;
-			end.SpawnedTile.GetComponent<MeshRenderer>().material = pathFinalMaterial;
+			if(end != null)
+			{
+				end.SpawnedTile.GetComponent<MeshRenderer>().material = pathFinalMaterial;
+			}
+			else
+			{
+				break;
+			}
 		}
 
 		start.SpawnedTile.GetComponent<MeshRenderer>().material = pathStartMaterial;

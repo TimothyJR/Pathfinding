@@ -40,46 +40,72 @@ public class GridEditor : Editor
 			EditorUtility.SetDirty(target);
 		}
 
-
-		traversabilityPosition = EditorGUILayout.BeginScrollView(traversabilityPosition);
-		EditorGUILayout.LabelField("Traversability");
-		EditorGUILayout.BeginVertical();
-		for (int i = 0; i < grid.Height; i++)
+		EditorGUILayout.BeginHorizontal();
 		{
-			EditorGUILayout.BeginHorizontal();
-			for (int j = 0; j < grid.Width; j++)
-			{
-				grid.GetNode(j, i).Traversable = EditorGUILayout.Toggle(grid.GetNode(j, i).Traversable);
-			}
-			EditorGUILayout.EndHorizontal();
+			grid.StartX = EditorGUILayout.IntField("Start Node:", grid.StartX);
+			grid.StartY = EditorGUILayout.IntField(grid.StartY);
 		}
-		EditorGUILayout.EndVertical();
+		EditorGUILayout.EndHorizontal();
+
+		EditorGUILayout.BeginHorizontal();
+		{
+			grid.EndX = EditorGUILayout.IntField("End Node:", grid.EndX);
+			grid.EndY = EditorGUILayout.IntField(grid.EndY);
+		}
+		EditorGUILayout.EndHorizontal();
+
+		// Draw all the traversability check boxes
+		traversabilityPosition = EditorGUILayout.BeginScrollView(traversabilityPosition);
+		{
+			EditorGUILayout.LabelField("Traversability");
+			EditorGUILayout.BeginVertical();
+			{
+				for (int i = 0; i < grid.Height; i++)
+				{
+					EditorGUILayout.BeginHorizontal();
+					{
+						for (int j = 0; j < grid.Width; j++)
+						{
+							grid.GetNode(j, i).Traversable = EditorGUILayout.Toggle(grid.GetNode(j, i).Traversable);
+						}
+					}
+					EditorGUILayout.EndHorizontal();
+				}
+			}
+			EditorGUILayout.EndVertical();
+		}
 		EditorGUILayout.EndScrollView();
 
-
+		// Draw all the text boxes for travel cost
 		travelCostPosition = EditorGUILayout.BeginScrollView(travelCostPosition);
-		EditorGUILayout.LabelField("Travel Cost");
-		EditorGUILayout.BeginVertical();
-		for (int i = 0; i < grid.Height; i++)
 		{
-			EditorGUILayout.BeginHorizontal();
-			for (int j = 0; j < grid.Width; j++)
+			EditorGUILayout.LabelField("Travel Cost");
+			EditorGUILayout.BeginVertical();
 			{
-				if(grid.GetNode(j, i).Traversable)
+				for (int i = 0; i < grid.Height; i++)
 				{
-					grid.GetNode(j, i).TravelCost = EditorGUILayout.IntField(grid.GetNode(j, i).TravelCost);
-				}
-				else
-				{
-					GUI.enabled = false;
-					grid.GetNode(j, i).TravelCost = EditorGUILayout.IntField(grid.GetNode(j, i).TravelCost);
-					GUI.enabled = true;
-				}
+					EditorGUILayout.BeginHorizontal();
+					{
+						for (int j = 0; j < grid.Width; j++)
+						{
+							if (grid.GetNode(j, i).Traversable)
+							{
+								grid.GetNode(j, i).TravelCost = EditorGUILayout.IntField(grid.GetNode(j, i).TravelCost);
+							}
+							else
+							{
+								GUI.enabled = false;
+								grid.GetNode(j, i).TravelCost = EditorGUILayout.IntField(grid.GetNode(j, i).TravelCost);
+								GUI.enabled = true;
+							}
 
+						}
+					}
+					EditorGUILayout.EndHorizontal();
+				}
 			}
-			EditorGUILayout.EndHorizontal();
+			EditorGUILayout.EndVertical();
 		}
-		EditorGUILayout.EndVertical();
 		EditorGUILayout.EndScrollView();
 
 		if (GUI.changed)
